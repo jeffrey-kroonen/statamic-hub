@@ -25,7 +25,7 @@ sed $sedFlags "s/PROJECT_NAME/$project_name/" ./docker/php/Dockerfile
 sed $sedFlags "s/PROJECT_NAME/$project_name/" ./docker/php/entrypoint.sh
 sed $sedFlags "s/PROJECT_NAME/$project_name/" ./docker-compose.yml
 printf "Project name has been processed in necessary files 📂\n"
-exit 1
+
 sed $sedFlags "s/USER_ID: USER_ID/USER_ID: $(id -u)/" ./docker-compose.yml
 sed $sedFlags "s/GROUP_ID: GROUP_ID/GROUP_ID: $(id -g)/" ./docker-compose.yml
 printf "User information is processed in necessary file 🙆‍♂️\n\n"
