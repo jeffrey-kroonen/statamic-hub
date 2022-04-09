@@ -17,10 +17,14 @@ These instructions will get you a copy of the project and running on your local 
 ### Installation
 
 1. Run the initialization script from the root of the project
+
 ```shell
 /bin/bash ./bin/initialize.sh
 ```
 2. Add the local domain to your host file on your local machine
+
+___Note:___ _Replace "PROJECT_NAME" with the name you have given in the initialization script_
+
 ```shell
 # Docker development - Start
 127.0.0.1 cms.PROJECT_NAME.local
