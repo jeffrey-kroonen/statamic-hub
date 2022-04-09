@@ -16,7 +16,7 @@ if [[ $(docker ps -q) ]]; then
 fi
 
 # Make project name snake case and remove special characters
-project_name=$(echo "$project_name" | tr -dc '[:alnum:] ' | tr '[:upper:]' '[:lower:]')
+project_name=$(echo "$project_name" | tr -dc '[:alnum:] ._-' | tr '[:upper:]' '[:lower:]')
 project_name="${project_name// /_}"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
