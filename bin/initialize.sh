@@ -32,10 +32,10 @@ printf "User information is processed in necessary file 🙆‍♂️\n\n"
 
 # Delete original files 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    rm ./docker/nginx/templates/default.conf.template
-    rm ./docker/php/Dockerfile
-    rm ./docker/php/entrypoint.sh
-    rm ./docker-compose.yml
+    rm ./docker/nginx/templates/default.conf.template.original
+    rm ./docker/php/Dockerfile.original
+    rm ./docker/php/entrypoint.sh.original
+    rm ./docker-compose.yml.original
 fi
 
 cp ./docker/.env.example ./docker/.env
