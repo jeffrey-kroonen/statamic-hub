@@ -13,13 +13,19 @@ fi
 project_name=$(echo "$project_name" | tr -dc '[:alnum:] ' | tr '[:upper:]' '[:lower:]')
 project_name="${project_name// /_}"
 
-# Replace placeholders in files with given project name
-sed -i "s/PROJECT_NAME/$project_name/" ./docker/nginx/templates/default.conf.template
-sed -i "s/PROJECT_NAME/$project_name/" ./docker/php/Dockerfile
-sed -i "s/PROJECT_NAME/$project_name/" ./docker/php/entrypoint.sh
-sed -i "s/PROJECT_NAME/$project_name/" ./docker-compose.yml
-printf "Project name has been processed in necessary files 📂\n"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    sedFlags="-i \"\" -e"
+else
+    sedFlags="-i"
+fi
 
+# Replace placeholders in files with given project name
+sed $sedFlags "s/PROJECT_NAME/$project_name/" ./docker/nginx/templates/default.conf.template
+sed $sedFlags "s/PROJECT_NAME/$project_name/" ./docker/php/Dockerfile
+sed $sedFlags "s/PROJECT_NAME/$project_name/" ./docker/php/entrypoint.sh
+sed $sedFlags "s/PROJECT_NAME/$project_name/" ./docker-compose.yml
+printf "Project name has been processed in necessary files 📂\n"
+exit 1
 sed -i "s/USER_ID: USER_ID/USER_ID: $(id -u)/" ./docker-compose.yml
 sed -i "s/GROUP_ID: GROUP_ID/GROUP_ID: $(id -g)/" ./docker-compose.yml
 printf "User information is processed in necessary file 🙆‍♂️\n\n"
