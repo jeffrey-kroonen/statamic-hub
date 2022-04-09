@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if docker is running
+if ! docker info > /dev/null 2>&1; then
+  echo "This project uses docker, and it isn't running - please start docker and try again!"
+  exit 1
+fi
+
 read -p "What is your project called: " project_name
 read -p "Email of superuser: " email
 
