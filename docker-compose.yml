@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: cms_db
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    env_file:
+      - ./docker/.env
+    ports:
+      - 3306:3306
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql:z
+      - ./docker/mysql/conf/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/mysql/bin:/docker-entrypoint-initdb.d
+    networks:
+      - cms_local
+
+  app:
+    container_name: cms_app
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    entrypoint: /usr/sbin/docker/entrypoint.sh
+    environment:
+        USER_ID: USER_ID
+        GROUP_ID: GROUP_ID
+    expose:
+      - 9000
+    volumes:
+      - ./docker/php/entrypoint.sh:/usr/sbin/docker/entrypoint.sh:ro
+      - ./web:/var/www
+      - ./docker/php/php-ini-override.ini:/usr/local/etc/php/conf.d/docker-custom.ini
+    networks:
+      - cms_local
+
+  web_server:
+    container_name: cms_web_server
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    volumes:
+      - ./docker/nginx/templates:/etc/nginx/templates
+      - ./web:/var/www
+    ports:
+      - 8080:80
+      - 4433:443
+    networks:
+      cms_local:
+        aliases:
+          - cms.PROJECT_NAME.local
+
+networks:
+  cms_local:
+    driver: bridge
