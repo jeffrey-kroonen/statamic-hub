@@ -1,4 +1,4 @@
-# Ecommerce template
+# Statamic hub
 
 A [Statamic CMS](https://statamic.com/) template project
 
